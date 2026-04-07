@@ -3,6 +3,8 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { IconGlyph } from '../lib/icon-map'
 import type {
   EmpathyBlock,
+  EmpathyBlockId,
+  PersonaEmpathyContent,
   PersonaSectorFocus,
   PersonaViewModel,
 } from '../types/empathy'
@@ -11,10 +13,11 @@ import { SectionHeading } from './SectionHeading'
 
 interface EmpathyMapProps {
   blocks: EmpathyBlock[]
-  activeBlockId: string
-  onBlockChange: (blockId: string) => void
+  activeBlockId: EmpathyBlockId
+  onBlockChange: (blockId: EmpathyBlockId) => void
   persona: PersonaViewModel
-  focus: Record<string, PersonaSectorFocus>
+  focus: Record<EmpathyBlockId, PersonaSectorFocus>
+  content: PersonaEmpathyContent
 }
 
 const desktopGridPosition: Record<string, string> = {
@@ -35,9 +38,10 @@ const categoryTone: Record<EmpathyBlock['category'], string> = {
 interface SectorCardProps {
   block: EmpathyBlock
   isActive: boolean
-  onSelect: (blockId: string) => void
+  onSelect: (blockId: EmpathyBlockId) => void
   focusItem: PersonaSectorFocus
   personaId: string
+  content: string[]
   desktop?: boolean
 }
 
@@ -47,11 +51,12 @@ function SectorCard({
   onSelect,
   focusItem,
   personaId,
+  content,
   desktop = false,
 }: SectorCardProps) {
   const shouldReduceMotion = useReducedMotion()
   const detailsId = `${personaId}-${block.id}-details`
-  const preview = block.content.slice(0, 2)
+  const preview = content.slice(0, 2)
 
   return (
     <motion.button
@@ -137,7 +142,7 @@ function SectorCard({
                 Детализация сектора
               </p>
               <div className="mt-3 space-y-3 text-sm leading-6 text-ink-800">
-                {block.content.map((item) => (
+                {content.map((item) => (
                   <div key={item} className="flex gap-3">
                     <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#1c2745]" />
                     <span>{item}</span>
@@ -158,6 +163,7 @@ export function EmpathyMap({
   onBlockChange,
   persona,
   focus,
+  content,
 }: EmpathyMapProps) {
   return (
     <section id="map" className="mt-16 sm:mt-20">
@@ -197,6 +203,7 @@ export function EmpathyMap({
               onSelect={onBlockChange}
               focusItem={focus[block.id]}
               personaId={persona.id}
+              content={content[block.id]}
             />
           ))}
         </div>
@@ -233,6 +240,7 @@ export function EmpathyMap({
                 onSelect={onBlockChange}
                 focusItem={focus[block.id]}
                 personaId={persona.id}
+                content={content[block.id]}
                 desktop
               />
             </div>
@@ -275,9 +283,17 @@ function CentralPersonaCard({
             <h3 className="text-3xl font-extrabold tracking-[-0.04em] text-ink-950">
               {persona.name}
             </h3>
-            <p className="mt-2 text-sm font-medium text-ink-700">
-              {persona.role} • {persona.age} лет • {persona.location}
-            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="inline-flex rounded-full border border-black/8 bg-white/85 px-3 py-1.5 text-xs font-semibold text-ink-800">
+                {persona.age} лет
+              </span>
+              <span className="inline-flex rounded-full border border-black/8 bg-white/85 px-3 py-1.5 text-xs font-semibold text-ink-800">
+                {persona.role}
+              </span>
+              <span className="inline-flex rounded-full border border-black/8 bg-white/85 px-3 py-1.5 text-xs font-semibold text-ink-800">
+                {persona.location}
+              </span>
+            </div>
           </div>
 
           <div className="inline-flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[1.75rem] border border-white/90 bg-white/90 px-4 text-base font-black uppercase tracking-[0.18em] text-ink-950 shadow-[0_18px_35px_rgba(17,24,39,0.12)]">

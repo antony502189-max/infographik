@@ -16,15 +16,16 @@ import {
   metricStats,
   navigationItems,
   painItems,
+  personaEmpathyContent,
   personaFocus,
   personas,
   studyGoals,
 } from './data/empathy'
-import type { PersonaId } from './types/empathy'
+import type { EmpathyBlockId, PersonaId } from './types/empathy'
 
 function App() {
   const [activePersonaId, setActivePersonaId] = useState<PersonaId>('anna')
-  const [activeBlockId, setActiveBlockId] = useState('jobs')
+  const [activeBlockId, setActiveBlockId] = useState<EmpathyBlockId>('jobs')
   const activePersona = personas[activePersonaId]
 
   return (
@@ -103,6 +104,7 @@ function App() {
           activeBlockId={activeBlockId}
           onBlockChange={setActiveBlockId}
           persona={activePersona}
+          content={personaEmpathyContent[activePersonaId]}
           focus={personaFocus[activePersonaId]}
         />
 

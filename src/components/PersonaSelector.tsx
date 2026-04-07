@@ -49,23 +49,31 @@ export function PersonaSelector({
                   transition={{ duration: 0.2, delay: index * 0.03 }}
                 >
                   <div
-                    className={`absolute inset-x-0 top-0 h-28 bg-gradient-to-r ${persona.accent} opacity-80`}
+                    className={`absolute inset-x-0 top-0 h-48 bg-gradient-to-r ${persona.accent} opacity-80`}
                   />
                   <div className="relative">
                     <div className="flex items-start justify-between gap-4">
-                      <div>
+                      <div className="max-w-[calc(100%-4.5rem)]">
                         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-700">
                           Персона {persona.id === 'anna' ? '№1' : '№2'}
                         </p>
                         <h3 className="mt-3 text-3xl font-extrabold tracking-[-0.04em] text-ink-950">
                           {persona.name}
                         </h3>
-                        <p className="mt-2 text-sm font-medium text-ink-700">
-                          {persona.age} лет • {persona.role} • {persona.location}
+                        <p className="mt-3 text-sm font-medium text-ink-800">
+                          {persona.role}
                         </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <span className="inline-flex rounded-full border border-black/8 bg-white/85 px-3 py-1.5 text-xs font-semibold text-ink-800">
+                            {persona.age} лет
+                          </span>
+                          <span className="inline-flex rounded-full border border-black/8 bg-white/85 px-3 py-1.5 text-xs font-semibold text-ink-800">
+                            {persona.location}
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/80 bg-white/80 text-sm font-black uppercase tracking-[0.18em] text-ink-950 shadow-[0_14px_30px_rgba(17,24,39,0.08)]">
+                      <div className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/80 bg-white/85 text-sm font-black uppercase tracking-[0.18em] text-ink-950 shadow-[0_14px_30px_rgba(17,24,39,0.08)]">
                         {persona.initials}
                       </div>
                     </div>

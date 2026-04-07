@@ -1,5 +1,13 @@
+export type EmpathyBlockId =
+  | 'audience'
+  | 'jobs'
+  | 'sees'
+  | 'says-does'
+  | 'hears'
+  | 'thinks-feels'
+
 export interface EmpathyBlock {
-  id: string
+  id: EmpathyBlockId
   title: string
   content: string[]
   icon: string
@@ -61,3 +69,5 @@ export interface PersonaSectorFocus {
   label: string
   note: string
 }
+
+export type PersonaEmpathyContent = Record<EmpathyBlockId, string[]>

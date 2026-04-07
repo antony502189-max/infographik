@@ -60,19 +60,19 @@ export function HeroSection({ metrics }: HeroSectionProps) {
 
           <Reveal delay={0.1}>
             <div className="space-y-4">
-              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                 {metrics.map((metric) => (
                   <article
                     key={metric.label}
-                    className="metric-card min-h-[190px]"
+                    className="metric-card flex min-h-[220px] flex-col"
                   >
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ink-500">
+                    <p className="max-w-[14ch] text-[0.8125rem] leading-6 font-semibold uppercase tracking-[0.18em] text-ink-500">
                       {metric.label}
                     </p>
                     <p className="mt-4 text-4xl font-extrabold tracking-[-0.04em] text-ink-950">
                       {metric.value}
                     </p>
-                    <p className="mt-4 text-sm leading-6 text-ink-700">
+                    <p className="mt-auto pt-5 text-sm leading-6 text-ink-700">
                       {metric.note}
                     </p>
                   </article>
